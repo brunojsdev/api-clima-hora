@@ -2,7 +2,72 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hora e Clima</title>
+    
+    <!-- Importação do arquivo de estilos externo -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./img/fi-port.png">
+
+</head>
+<body>
+
+    <!-- [ SEÇÃO 1: FUNDO ANIMADO ] -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- [ SEÇÃO 2: BOTÃO VOLTAR PORTFÓLIO ] -->
+    <a href="https://brunojsdev.github.io/meu-portfolio/" class="btn-back">
+        ← PORTFÓLIO
+    </a>
+
+    <!-- [ SEÇÃO 3: CONTAINER PRINCIPAL ] -->
+    <main class="dashboard-panel">
+        
+        <!-- Bloco do Relógio Digital -->
+        <section class="clock-module">
+            <div class="time-display">
+                <div class="time-block">
+                    <span class="time-val" id="hrs">00</span>
+                    <span class="time-label">HORAS</span>
+                </div>
+                <span class="time-colon">:</span>
+                <div class="time-block">
+                    <span class="time-val" id="min">00</span>
+                    <span class="time-label">MINUTOS</span>
+                </div>
+                <span class="time-colon">:</span>
+                <div class="time-block">
+                    <span class="time-val" id="sec">00</span>
+                    <span class="time-label">SEGUNDOS</span>
+                </div>
+            </div>
+            <div class="date-display" id="date">CARREGANDO DATA...</div>
+        </section>
+
+        <!-- Bloco de Informações Climáticas -->
+        <section class="weather-module">
+            <div class="weather-info">
+                <div class="w-icon" id="w-icon">⛅</div>
+                <div class="w-details">
+                    <span class="w-temp" id="w-temp">24°C</span>
+                    <span class="w-city">São Bernardo do Campo</span>
+                </div>
+            </div>
+            <button class="btn-update" id="btn-update" onclick="fetchWeather()">
+                atualizar
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Importação do arquivo de lógica externa -->
+    <script src="script.js"></script>
+</body>
+</html>
     <title>Hora e Clima</title>
     
     <!-- Importação do arquivo de estilos externo -->
