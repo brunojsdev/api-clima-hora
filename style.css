@@ -3,21 +3,14 @@
 ========================================================== 
 */
 :root {
-    /* Cores de Fundo */
     --bg-main: #050a14;
     --bg-card: #0b1221;
-    
-    /* Cores de Destaque (Neon) */
-    --neon-green: #00ff88;      /* Verde Neon */
-    --digital-cyan: #00d2ff;    /* Ciano Digital */
-    --pistachio: #b0d15a;       /* Amarelo Pistache */
-    
-    /* Cores de Texto e Bordas */
-    --ice-white: #e2e8f0;       /* Branco Gelo */
-    --slate-gray: #94a3b8;      /* Cinza Ardósia */
-    --border-dark: #1e293b;     /* Borda Escura */
-    
-    /* Efeitos de Brilho (Glow) */
+    --neon-green: #00ff88;
+    --digital-cyan: #00d2ff;
+    --pistachio: #b0d15a;
+    --ice-white: #e2e8f0;
+    --slate-gray: #94a3b8;
+    --border-dark: #1e293b;
     --glow-green: rgba(0, 255, 136, 0.2);
     --glow-cyan: rgba(0, 210, 255, 0.2);
 }
@@ -40,11 +33,11 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden; /* Impede scroll por causa do canvas */
+    overflow: hidden;
 }
 
 /* ==========================================================
-   3. FUNDO E DASHBOARD
+   3. FUNDO E BOTÃO VOLTAR
 ========================================================== 
 */
 #bg-canvas {
@@ -56,6 +49,35 @@ body {
     z-index: -1;
 }
 
+/* Botão Flutuante de Voltar */
+.btn-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    text-decoration: none;
+    color: var(--neon-green);
+    border: 1px solid var(--neon-green);
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    background: rgba(11, 18, 33, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.btn-back:hover {
+    background: var(--neon-green);
+    color: var(--bg-main);
+    box-shadow: 0 0 15px var(--glow-green);
+}
+
+/* ==========================================================
+   4. DASHBOARD E COMPONENTES
+========================================================== 
+*/
 .dashboard-panel {
     background-color: var(--bg-card);
     border: 1px solid var(--border-dark);
@@ -72,10 +94,7 @@ body {
     z-index: 10;
 }
 
-/* ==========================================================
-   4. COMPONENTE: RELÓGIO (CLOCK)
-========================================================== 
-*/
+/* Relógio */
 .clock-module {
     display: flex;
     flex-direction: column;
@@ -127,9 +146,7 @@ body {
     animation: blink 1s step-start infinite;
 }
 
-@keyframes blink {
-    50% { opacity: 0; }
-}
+@keyframes blink { 50% { opacity: 0; } }
 
 .date-display {
     color: var(--digital-cyan);
@@ -139,10 +156,7 @@ body {
     font-weight: 500;
 }
 
-/* ==========================================================
-   5. COMPONENTE: CLIMA (WEATHER)
-========================================================== 
-*/
+/* Clima */
 .weather-module {
     background-color: rgba(5, 10, 20, 0.4);
     border: 1px solid var(--border-dark);
@@ -159,28 +173,11 @@ body {
     gap: 15px;
 }
 
-.w-icon {
-    font-size: 2.2rem;
-    filter: drop-shadow(0 0 8px var(--glow-cyan));
-}
+.w-icon { font-size: 2.2rem; filter: drop-shadow(0 0 8px var(--glow-cyan)); }
+.w-temp { color: var(--pistachio); font-size: 1.8rem; font-weight: bold; line-height: 1; }
+.w-city { color: var(--slate-gray); font-size: 0.85rem; margin-top: 4px; }
 
-.w-temp {
-    color: var(--pistachio);
-    font-size: 1.8rem;
-    font-weight: bold;
-    line-height: 1;
-}
-
-.w-city {
-    color: var(--slate-gray);
-    font-size: 0.85rem;
-    margin-top: 4px;
-}
-
-/* ==========================================================
-   6. BOTÕES E INTERAÇÃO
-========================================================== 
-*/
+/* Botão Atualizar */
 .btn-update {
     background-color: transparent;
     border: 1px solid var(--neon-green);
@@ -202,20 +199,13 @@ body {
     box-shadow: 0 0 15px var(--glow-green);
 }
 
-.btn-update:disabled {
-    border-color: var(--slate-gray);
-    color: var(--slate-gray);
-    cursor: wait;
-}
+.btn-update:disabled { color: var(--slate-gray); border-color: var(--slate-gray); cursor: wait; }
 
-/* ==========================================================
-   7. RESPONSIVIDADE (MOBILE)
-========================================================== 
-*/
+/* Mobile */
 @media (max-width: 420px) {
+    .btn-back { top: 10px; left: 10px; font-size: 0.6rem; }
     .dashboard-panel { padding: 20px; }
     .time-val { font-size: 1.8rem; }
-    .time-block { padding: 12px 2px; }
     .weather-module { flex-direction: column; gap: 18px; text-align: center; }
     .weather-info { flex-direction: column; gap: 8px; }
     .btn-update { width: 100%; }
