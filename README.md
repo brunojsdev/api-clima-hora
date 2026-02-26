@@ -1,4 +1,4 @@
-# 🕒 Cyber Dashboard 2.0
+# 🕒 Widget de Hora e Clima ⛅
 
 Uma interface moderna e responsiva que combina um relógio digital preciso com um widget de clima simulado, envoltos em uma estética Cyberpunk/Futurista com animações interativas de fundo.
 
