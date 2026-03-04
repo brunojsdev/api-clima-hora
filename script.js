@@ -1,175 +1,180 @@
-/**
- * ==========================================================
- * SEÇÃO 1: GERENCIAMENTO DO RELÓGIO E DATA
- * ==========================================================
- */
-
-// Adiciona zero à esquerda para números menores que 10
-const formatZero = (num) => (num < 10 ? `0${num}` : num);
-
+/* =========================================================================
+   1. LÓGICA DO RELÓGIO
+   ========================================================================= */
 function updateClock() {
     const now = new Date();
     
-    // Captura dos elementos do DOM
-    const hrsEl = document.getElementById("hrs");
-    const minEl = document.getElementById("min");
-    const secEl = document.getElementById("sec");
-    const dateEl = document.getElementById("date");
-
-    // Atualização do Tempo
-    if (hrsEl) hrsEl.innerText = formatZero(now.getHours());
-    if (minEl) minEl.innerText = formatZero(now.getMinutes());
-    if (secEl) secEl.innerText = formatZero(now.getSeconds());
+    // Horário
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    document.getElementById('time').textContent = now.toLocaleTimeString('pt-BR', timeOptions);
     
-    // Atualização da Data (Padrão: Seg, 24 de Mai de 2024)
-    const options = { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' };
-    let dateString = now.toLocaleDateString('pt-BR', options).replace(/\./g, '');
-    if (dateEl) dateEl.innerText = dateString;
+    // Data
+    const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    document.getElementById('date').textContent = now.toLocaleDateString('pt-BR', dateOptions);
 }
 
-// Inicia o relógio imediatamente e define intervalo de 1s
 setInterval(updateClock, 1000);
-updateClock();
+updateClock(); // Chama imediatamente na inicialização
 
 
-/**
- * ==========================================================
- * SEÇÃO 2: LÓGICA DO WIDGET DE CLIMA
- * ==========================================================
- */
+/* =========================================================================
+   2. LÓGICA DE PREVISÃO DO TEMPO (Open-Meteo API)
+   ========================================================================= */
+const cityInput = document.getElementById('city-input');
+const searchBtn = document.getElementById('search-btn');
+const cityNameEl = document.getElementById('city-name');
+const temperatureEl = document.getElementById('temperature');
+const descriptionEl = document.getElementById('description');
+const weatherIconEl = document.getElementById('weather-icon');
 
-const weatherMocks = [
-    { icon: "☀️", temp: "28°C" },
-    { icon: "⛅", temp: "24°C" },
-    { icon: "🌧️", temp: "19°C" },
-    { icon: "🌩️", temp: "21°C" },
-    { icon: "☁️", temp: "18°C" }
-];
+// Mapeamento de códigos meteorológicos para Emojis e Texto
+const weatherCodes = {
+    0: { desc: 'Céu limpo', icon: '☀️' },
+    1: { desc: 'Principalmente limpo', icon: '🌤️' },
+    2: { desc: 'Parcialmente nublado', icon: '⛅' },
+    3: { desc: 'Nublado', icon: '☁️' },
+    45: { desc: 'Neblina', icon: '🌫️' },
+    48: { desc: 'Nevoeiro', icon: '🌫️' },
+    51: { desc: 'Chuvisco leve', icon: '🌧️' },
+    53: { desc: 'Chuvisco moderado', icon: '🌧️' },
+    55: { desc: 'Chuvisco denso', icon: '🌧️' },
+    61: { desc: 'Chuva leve', icon: '🌧️' },
+    63: { desc: 'Chuva moderada', icon: '🌧️' },
+    65: { desc: 'Chuva forte', icon: '🌧️' },
+    71: { desc: 'Neve leve', icon: '❄️' },
+    73: { desc: 'Neve moderada', icon: '❄️' },
+    75: { desc: 'Neve forte', icon: '❄️' },
+    95: { desc: 'Tempestade', icon: '⛈️' },
+    96: { desc: 'Tempestade forte', icon: '⛈️' },
+    99: { desc: 'Tempestade extrema', icon: '⛈️' }
+};
 
-function fetchWeather() {
-    const btn = document.getElementById("btn-update");
-    const iconEl = document.getElementById("w-icon");
-    const tempEl = document.getElementById("w-temp");
+async function fetchWeather(city) {
+    try {
+        // UI de Carregamento
+        cityNameEl.textContent = "Buscando...";
+        temperatureEl.textContent = "--°C";
+        descriptionEl.textContent = "Aguarde";
+        weatherIconEl.textContent = "⏳";
+        cityNameEl.classList.add('loading');
 
-    // Estado Visual: Carregando
-    btn.innerText = "AGUARDE..."; 
-    btn.disabled = true;
-    iconEl.style.opacity = "0.3";
-    tempEl.style.opacity = "0.3";
+        // 1. Busca as coordenadas
+        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=pt`);
+        const geoData = await geoRes.json();
 
-    // Simulação de delay de rede (1 segundo)
-    setTimeout(() => {
-        const randomWeather = weatherMocks[Math.floor(Math.random() * weatherMocks.length)];
-        
-        iconEl.innerText = randomWeather.icon;
-        tempEl.innerText = randomWeather.temp;
-        
-        iconEl.style.opacity = "1";
-        tempEl.style.opacity = "1";
-        btn.innerText = "atualizar"; 
-        btn.disabled = false;
-    }, 1000);
+        if (!geoData.results || geoData.results.length === 0) {
+            throw new Error("Cidade não encontrada");
+        }
+
+        const { latitude, longitude, name, admin1, country } = geoData.results[0];
+        const locationName = admin1 ? `${name}, ${admin1}` : `${name}, ${country}`;
+
+        // 2. Busca a previsão do tempo
+        const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+        const weatherData = await weatherRes.json();
+
+        const current = weatherData.current_weather;
+        const code = current.weathercode;
+        const weatherInfo = weatherCodes[code] || { desc: 'Desconhecido', icon: '🌍' };
+
+        // Atualiza a Interface
+        cityNameEl.textContent = locationName;
+        temperatureEl.textContent = `${Math.round(current.temperature)}°C`;
+        descriptionEl.textContent = weatherInfo.desc;
+        weatherIconEl.textContent = weatherInfo.icon;
+
+    } catch (error) {
+        cityNameEl.textContent = "Erro na busca";
+        temperatureEl.textContent = "--°C";
+        descriptionEl.textContent = error.message === "Cidade não encontrada" ? "Cidade não encontrada" : "Tente novamente";
+        weatherIconEl.textContent = "❌";
+    } finally {
+        cityNameEl.classList.remove('loading');
+    }
 }
 
+// Eventos de Busca
+searchBtn.addEventListener('click', () => {
+    if (cityInput.value.trim() !== '') fetchWeather(cityInput.value);
+});
 
-/**
- * ==========================================================
- * SEÇÃO 3: ANIMAÇÃO DE FUNDO (DIGITAL RAIN)
- * ==========================================================
- */
+cityInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && cityInput.value.trim() !== '') fetchWeather(cityInput.value);
+});
 
+// Inicia com uma cidade padrão
+fetchWeather('São Paulo');
+
+
+/* =========================================================================
+   3. ANIMAÇÃO DO CANVAS
+   ========================================================================= */
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 
 let width, height;
 let particles = [];
+const colors = [ '#ffdd00', '#ffaa00', '#ff9900', '#5752ff', '#c9e4ff' ];
 
-// Paleta de cores extraída da raiz do CSS
-const rainColors = ['#00ff88', '#00d2ff', '#b0d15a', '#005544'];
-
-/**
- * Reajusta o tamanho do canvas para preencher a janela
- */
-function resizeCanvas() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
+function resize() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
 }
 
-/**
- * Classe que define o comportamento de cada quadrado cadente
- */
-class SquareParticle {
-    constructor() {
-        this.init();
+class Square {
+  constructor() {
+    this.init();
+  }
+  init() {
+    this.x = Math.random() * width;
+    this.y = Math.random() * height - height;
+    this.size = Math.random() * 15 + 5;
+    this.speed = Math.random() * 2 + 0.5;
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.opacity = Math.random() * 0.8 + 0.4;
+  }
+  update() {
+    this.y += this.speed;
+    if (this.y > height) {
+      this.init();
+      this.y = -20;
     }
-
-    init() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height - height; // Começa acima da tela
-        this.size = Math.random() * 15 + 5;
-        this.speed = Math.random() * 2 + 0.5;
-        this.color = rainColors[Math.floor(Math.random() * rainColors.length)];
-        this.opacity = Math.random() * 0.5 + 0.1;
+  }
+  draw() {
+    ctx.globalAlpha = this.opacity;
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(this.x, this.y, this.size, this.size);
+    if (Math.random() > 0.98) {
+       ctx.fillStyle = this.color;
+       ctx.fillRect(this.x, this.y, this.size, this.size);
     }
-
-    update() {
-        this.y += this.speed;
-        // Reinicia no topo se sair por baixo
-        if (this.y > height) {
-            this.init();
-            this.y = -20;
-        }
-    }
-
-    draw() {
-        ctx.globalAlpha = this.opacity;
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = 1.5;
-        
-        // Desenha apenas o contorno
-        ctx.strokeRect(this.x, this.y, this.size, this.size);
-        
-        // Efeito Glitch: Ocasionalmente preenche o quadrado
-        if (Math.random() > 0.98) {
-            ctx.fillStyle = this.color;
-            ctx.fillRect(this.x, this.y, this.size, this.size);
-        }
-        ctx.globalAlpha = 1;
-    }
+    ctx.globalAlpha = 1;
+  }
 }
 
-/**
- * Cria a lista de partículas baseada na largura da tela
- */
-function setupRain() {
-    particles = [];
-    const density = Math.floor(width / 12); // Quantidade de quadrados
-    for (let i = 0; i < density; i++) {
-        particles.push(new SquareParticle());
-    }
+function initParticles() {
+  particles = [];
+  const particleCount = Math.floor(width / 10);
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Square());
+  }
 }
 
-/**
- * Loop principal de animação
- */
-function renderFrame() {
-    ctx.clearRect(0, 0, width, height); // Limpa o frame anterior
-    
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    
-    requestAnimationFrame(renderFrame);
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
 }
 
-// Inicialização da Animação
 window.addEventListener('resize', () => {
-    resizeCanvas();
-    setupRain();
+  resize();
+  initParticles();
 });
 
-// Execução imediata
-resizeCanvas();
-setupRain();
-renderFrame();
+resize();         
+initParticles();  
+animate();
