@@ -1,212 +1,205 @@
-/* ==========================================================
-   1. VARIÁVEIS E PALETA DE CORES
-========================================================== 
-*/
+/* --- PALETA DE CORES --- */
 :root {
-    --bg-main: #050a14;
-    --bg-card: #0b1221;
-    --neon-green: #00ff88;
-    --digital-cyan: #00d2ff;
-    --pistachio: #b0d15a;
-    --ice-white: #e2e8f0;
-    --slate-gray: #94a3b8;
-    --border-dark: #1e293b;
-    --glow-green: rgba(0, 255, 136, 0.2);
-    --glow-cyan: rgba(0, 210, 255, 0.2);
+    /* FUNDOS */
+    --fundo-claro: #150136;
+    --fundo-medio: #090024;
+    --fundo-escuro: #040014;
+
+    /* DESTAQUES */
+    --destaque-claro: #ffdd00;
+    --destaque-medio: #ffaa00;
+    --destaque-escuro: #ff9900;
+
+    /* BORDAS */
+    --borda-clara: #5752ff;
+    --borda-escura: #5a47ff;
+
+    /* TEXTOS */
+    --textos: #c9e4ff;
 }
 
-/* ==========================================================
-   2. RESET E CONFIGURAÇÕES GERAIS
-========================================================== 
-*/
+/* --- ESTILOS GERAIS --- */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 body {
-    background-color: var(--bg-main);
-    color: var(--ice-white);
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--fundo-escuro);
+    color: var(--textos);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    overflow: hidden;
+    overflow: hidden; /* Evita scroll na animação do canvas */
 }
 
-/* ==========================================================
-   3. FUNDO E BOTÃO VOLTAR
-========================================================== 
-*/
+/* --- CANVAS --- */
 #bg-canvas {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none; /* Deixa os cliques passarem para a interface */
 }
 
-/* Botão Flutuante de Voltar */
-.btn-back {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-    text-decoration: none;
-    color: var(--neon-green);
-    border: 1px solid var(--neon-green);
-    padding: 8px 15px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    background: rgba(11, 18, 33, 0.8);
-    backdrop-filter: blur(4px);
-}
-
-.btn-back:hover {
-    background: var(--neon-green);
-    color: var(--bg-main);
-    box-shadow: 0 0 15px var(--glow-green);
-}
-
-/* ==========================================================
-   4. DASHBOARD E COMPONENTES
-========================================================== 
-*/
-.dashboard-panel {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-dark);
-    border-radius: 12px;
-    width: 95%;
-    max-width: 480px;
-    padding: 30px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 20px rgba(0, 255, 136, 0.05);
-    backdrop-filter: blur(8px);
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+/* --- INTERFACE PRINCIPAL --- */
+.container {
     position: relative;
-    z-index: 10;
-}
-
-/* Relógio */
-.clock-module {
+    z-index: 1;
+    background-color: var(--fundo-medio);
+    border: 2px solid var(--borda-clara);
+    border-radius: 20px;
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 
+                inset 0 0 15px rgba(87, 82, 255, 0.2);
+    backdrop-filter: blur(5px);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    gap: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
-.time-display {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-}
-
-.time-block {
-    background-color: var(--bg-main);
-    border: 1px solid var(--border-dark);
-    border-radius: 8px;
-    padding: 15px 5px;
+/* --- RELÓGIO --- */
+.clock-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    gap: 0.2rem;
 }
 
-.time-val {
-    font-family: 'Courier New', monospace;
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--neon-green);
-    text-shadow: 0 0 10px var(--glow-green);
+#time {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--destaque-claro);
+    text-shadow: 0 0 15px rgba(255, 221, 0, 0.4);
     line-height: 1;
+    letter-spacing: -2px;
 }
 
-.time-label {
-    color: var(--slate-gray);
-    font-size: 0.6rem;
-    margin-top: 6px;
-    letter-spacing: 1px;
-}
-
-.time-colon {
-    color: var(--digital-cyan);
-    font-size: 1.8rem;
-    font-weight: bold;
-    animation: blink 1s step-start infinite;
-}
-
-@keyframes blink { 50% { opacity: 0; } }
-
-.date-display {
-    color: var(--digital-cyan);
-    font-size: 0.85rem;
+#date {
+    font-size: 1.1rem;
+    color: var(--destaque-escuro);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 500;
+    letter-spacing: 1px;
+    font-weight: 600;
 }
 
-/* Clima */
-.weather-module {
-    background-color: rgba(5, 10, 20, 0.4);
-    border: 1px solid var(--border-dark);
-    border-radius: 8px;
-    padding: 20px;
+/* --- CLIMA --- */
+.weather-section {
+    background-color: var(--fundo-claro);
+    border: 1px solid var(--borda-escura);
+    border-radius: 12px;
+    padding: 1.5rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    gap: 1rem;
 }
 
 .weather-info {
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: center;
+    gap: 1rem;
 }
 
-.w-icon { font-size: 2.2rem; filter: drop-shadow(0 0 8px var(--glow-cyan)); }
-.w-temp { color: var(--pistachio); font-size: 1.8rem; font-weight: bold; line-height: 1; }
-.w-city { color: var(--slate-gray); font-size: 0.85rem; margin-top: 4px; }
+#weather-icon {
+    font-size: 3.5rem;
+    filter: drop-shadow(0 0 10px rgba(255, 170, 0, 0.3));
+}
 
-/* Botão Atualizar */
-.btn-update {
-    background-color: transparent;
-    border: 1px solid var(--neon-green);
-    color: var(--neon-green);
-    padding: 10px 20px;
-    border-radius: 4px;
+.temp-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#temperature {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--destaque-medio);
+    line-height: 1;
+}
+
+#description {
+    font-size: 1rem;
+    color: var(--textos);
+    opacity: 0.9;
+}
+
+/* --- BUSCA DE CIDADE --- */
+.search-box {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--borda-escura);
+    background-color: var(--fundo-escuro);
+    color: var(--textos);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-box input:focus {
+    border-color: var(--destaque-claro);
+}
+
+.search-box input::placeholder {
+    color: rgba(201, 228, 255, 0.5);
+}
+
+.search-box button {
+    background-color: var(--borda-clara);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0 1.2rem;
     cursor: pointer;
-    font-family: inherit;
-    font-size: 0.75rem;
-    font-weight: bold;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
-.btn-update:hover:not(:disabled) {
-    background-color: var(--neon-green);
-    color: var(--bg-main);
-    box-shadow: 0 0 15px var(--glow-green);
+.search-box button:hover {
+    background-color: var(--borda-escura);
+    box-shadow: 0 0 10px var(--borda-clara);
 }
 
-.btn-update:disabled { color: var(--slate-gray); border-color: var(--slate-gray); cursor: wait; }
+#city-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--destaque-claro);
+    margin-bottom: -0.5rem;
+    width: 100%;
+    text-align: left;
+}
 
-/* Mobile */
-@media (max-width: 420px) {
-    .btn-back { top: 10px; left: 10px; font-size: 0.6rem; }
-    .dashboard-panel { padding: 20px; }
-    .time-val { font-size: 1.8rem; }
-    .weather-module { flex-direction: column; gap: 18px; text-align: center; }
-    .weather-info { flex-direction: column; gap: 8px; }
-    .btn-update { width: 100%; }
+/* Loading animado */
+.loading {
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* Responsividade básica */
+@media (max-width: 480px) {
+    #time { font-size: 3.2rem; }
+    #temperature { font-size: 2.5rem; }
+    .container { padding: 1.5rem; width: 95%; }
 }
