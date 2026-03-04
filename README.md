@@ -33,7 +33,7 @@ O projeto foi construído seguindo uma estética "Cyber-Dark", utilizando os seg
 ├── style.css       # Estilização e Temas
 ├── script.js       # Lógica e Animação Canvas
 ├── README.md       # Documentação do projeto
-└── img/            # Capturas de tela (Mobile/Desktop)
+└── img/            # Capturas de tela
 ```
 ## ⚙️ Como Executar o Projeto
 
