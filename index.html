@@ -3,64 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hora e Clima</title>
-    
-    <!-- Importação do arquivo de estilos externo -->
+    <title>Previsão do Tempo & Relógio</title>
+    <!-- Fonte moderna -->
+    <link href="[https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap](https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap)" rel="stylesheet">
+    <!-- Conectando o arquivo CSS -->
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="./img/fi-port.png">
-
 </head>
 <body>
 
-    <!-- [ SEÇÃO 1: FUNDO ANIMADO ] -->
+    <!-- Canvas de Background -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- [ SEÇÃO 2: BOTÃO VOLTAR PORTFÓLIO ] -->
-    <a href="https://brunojsdev.github.io/meu-portfolio/" class="btn-back">
-        ← PORTFÓLIO
-    </a>
-
-    <!-- [ SEÇÃO 3: CONTAINER PRINCIPAL ] -->
-    <main class="dashboard-panel">
+    <!-- Container Principal do App -->
+    <main class="container">
         
-        <!-- Bloco do Relógio Digital -->
-        <section class="clock-module">
-            <div class="time-display">
-                <div class="time-block">
-                    <span class="time-val" id="hrs">00</span>
-                    <span class="time-label">HORAS</span>
-                </div>
-                <span class="time-colon">:</span>
-                <div class="time-block">
-                    <span class="time-val" id="min">00</span>
-                    <span class="time-label">MINUTOS</span>
-                </div>
-                <span class="time-colon">:</span>
-                <div class="time-block">
-                    <span class="time-val" id="sec">00</span>
-                    <span class="time-label">SEGUNDOS</span>
-                </div>
-            </div>
-            <div class="date-display" id="date">CARREGANDO DATA...</div>
+        <!-- Relógio -->
+        <section class="clock-section">
+            <div id="time">00:00:00</div>
+            <div id="date">Carregando data...</div>
         </section>
 
-        <!-- Bloco de Informações Climáticas -->
-        <section class="weather-module">
+        <!-- Clima -->
+        <section class="weather-section">
+            <div id="city-name">Carregando clima...</div>
+            
             <div class="weather-info">
-                <div class="w-icon" id="w-icon">⛅</div>
-                <div class="w-details">
-                    <span class="w-temp" id="w-temp">24°C</span>
-                    <span class="w-city">São Bernardo do Campo</span>
+                <div id="weather-icon">⏳</div>
+                <div class="temp-container">
+                    <div id="temperature">--°C</div>
+                    <div id="description">Aguarde</div>
                 </div>
             </div>
-            <button class="btn-update" id="btn-update" onclick="fetchWeather()">
-                atualizar
-            </button>
+
+            <div class="search-box">
+                <input type="text" id="city-input" placeholder="Digite uma cidade..." autocomplete="off">
+                <button id="search-btn">Buscar</button>
+            </div>
         </section>
 
     </main>
 
-    <!-- Importação do arquivo de lógica externa -->
-    <script src="script.js"></script>
+    <!-- Conectando o arquivo JavaScript -->
+    <script src="script.js" defer></script>
 </body>
 </html>
