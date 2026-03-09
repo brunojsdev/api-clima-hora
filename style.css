@@ -27,13 +27,24 @@
 }
 
 body {
-    background-color: var(--fundo-escuro);
     color: var(--textos);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden; /* Evita scroll na animação do canvas */
+    background: linear-gradient(
+    135deg, 
+    var(--fundo-escuro), 
+    var(--fundo-medio), 
+    var(--fundo-claro), 
+    var(--fundo-medio), 
+    var(--fundo-escuro), 
+    var(--fundo-medio), 
+    var(--fundo-claro), 
+    var(--fundo-medio), 
+    var(--fundo-escuro)
+  );
 }
 
 /* --- CANVAS --- */
