@@ -107,7 +107,7 @@ fetchWeather('São Paulo');
 
 
 /* ==========================================================================
-   2. ANIMAÇÃO DE FUNDO (CANVAS)
+   3. ANIMAÇÃO DE FUNDO (CANVAS)
    ========================================================================== */
 
 const canvas = document.getElementById('bg-canvas');
@@ -352,6 +352,7 @@ if (canvas) {
   window.addEventListener('resize', initParticles);
 
   // Inicializa o sistema de partículas e o loop
+  resize();         
   initParticles();
   animate();
 }
