@@ -23,34 +23,32 @@
     <canvas id="bg-canvas"></canvas>
 
     <!-- Container Principal do App -->
-    <main class="container">
+    <div class="app-layout">
+    
+    <section class="container clock-container">
+        <div id="time">00:00:00</div>
+        <div id="date">Carregando data...</div>
+    </section>
+
+    <section class="container weather-container">
+        <div id="city-name">Carregando clima...</div>
         
-        <!-- Relógio -->
-        <section class="clock-section">
-            <div id="time">00:00:00</div>
-            <div id="date">Carregando data...</div>
-        </section>
-
-        <!-- Clima -->
-        <section class="weather-section">
-            <div id="city-name">Carregando clima...</div>
-            
-            <div class="weather-info">
-                <div id="weather-icon">⏳</div>
-                <div class="temp-container">
-                    <div id="temperature">--°C</div>
-                    <div id="description">Aguarde</div>
-                </div>
+        <div class="weather-info">
+            <div id="weather-icon">⏳</div>
+            <div class="temp-container">
+                <div id="temperature">--°C</div>
+                <div id="description">Aguarde</div>
             </div>
+        </div>
 
-            <div class="search-box">
-                <input type="text" id="city-input" placeholder="Digite uma cidade..." autocomplete="off">
-                <button id="search-btn">Buscar</button>
-            </div>
-        </section>
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Digite uma cidade..." autocomplete="off">
+            <button id="search-btn">Buscar</button>
+        </div>
+    </section>
 
-    </main>
-
+    </div>
+    
     <!-- Conectando o arquivo JavaScript -->
     <script src="script.js" defer></script>
 </body>
