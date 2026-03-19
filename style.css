@@ -159,7 +159,7 @@ body {
     align-items: center;
     justify-content: center; /* Mantém centralizado no eixo principal */
     gap: 1rem;
-    padding-right: 80px; /* Mantém centralizado no eixo principal */
+    padding-left: 80px; /* Move o bloco levemente para a direita */
 }
 
 #weather-icon {
