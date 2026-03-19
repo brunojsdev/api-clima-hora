@@ -280,6 +280,8 @@ body {
         gap: 15px; /* Espaçamento entre a caixa da Data e a do Clima */
         margin-top: 70px; /* Desce o conjunto para não bater no botão Voltar */
         padding: 0 10px;
+        transform: translateY(-8vh);  /* Desloca o bloco inteiro 8% da altura da tela para cima do centro exato */
+
     }
 
     /* 3. Ajuste das Caixas Individuais */
