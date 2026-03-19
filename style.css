@@ -90,23 +90,31 @@ body {
 }
 
 /* --- INTERFACE PRINCIPAL --- */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaço entre a caixa de Data e a de Clima */
+    width: 90%;
+    max-width: 450px;
+    z-index: 1;
+    margin-top: 60px; /* Espaço para o botão de voltar não cobrir o relógio */
+}
+
+/* Ajuste na classe container para ser dinâmica */
 .container {
     position: relative;
-    z-index: 1;
     background-color: var(--fundo-medio);
     border: 2px solid var(--borda-clara);
     border-radius: 20px;
-    padding: 2.5rem;
-    width: 90%;
-    max-width: 450px;
+    padding: 2rem;
+    width: 100%; /* Ocupa a largura do app-layout */
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 
                 inset 0 0 15px rgba(87, 82, 255, 0.2);
     backdrop-filter: blur(5px);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    text-align: center;
-    transition: all 0.3s ease;
+    align-items: center;
+    min-height: auto; /* A borda só vai até onde termina o conteúdo */
 }
 
 /* --- RELÓGIO --- */
@@ -250,11 +258,11 @@ body {
 }
 
 /* ==========================================================================
-   RESPONSIVIDADE (MOBILE - MAX 600PX)
+   RESPONSIVIDADE MOBILE (CAIXAS SEPARADAS)
    ========================================================================== */
 @media (max-width: 600px) {
     
-    /* 1. Botão Voltar (Visível e Ajustado) */
+    /* 1. Botão Voltar (Visível no topo esquerdo) */
     .back-portfolio-btn {
         display: flex;
         top: 10px;
@@ -262,56 +270,71 @@ body {
         padding: 6px 12px;
         font-size: 0.75rem;
         gap: 5px;
+        z-index: 10; /* Garante que fique acima das caixas */
     }
 
-    /* 2. Container Principal (Ajuste de Altura Dinâmica) */
+    /* 2. Layout que empilha as caixas */
+    .app-layout {
+        width: 95%;
+        gap: 15px; /* Espaçamento entre a caixa da Data e a do Clima */
+        margin-top: 70px; /* Desce o conjunto para não bater no botão Voltar */
+        padding: 0 10px;
+    }
+
+    /* 3. Ajuste das Caixas Individuais */
     .container {
         padding: 1.5rem;
-        width: 95%;
-        gap: 1.2rem;
-        margin-top: 50px; /* Espaço para o botão de voltar */
-        min-height: auto; /* Impede a borda de ir até o final da página */
+        min-height: auto; /* A borda agora respeita apenas o conteúdo de cada caixa */
+        width: 100%;
     }
 
-    /* 3. Ajustes do Relógio */
+    /* 4. Tipografia do Relógio (Caixa Superior) */
     #time { 
         font-size: 3rem; 
         letter-spacing: -1px;
+        line-height: 1;
     }
 
     #date {
         font-size: 0.9rem;
+        margin-top: 5px;
     }
 
-    /* 4. Seção de Clima e Temperatura */
+    /* 5. Seção de Clima (Caixa Inferior) */
     .weather-section {
-        padding: 1rem;
+        padding: 0.5rem 0; /* Ajuste interno para mobile */
+        width: 100%;
+    }
+
+    #city-name {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
     }
 
     #weather-icon {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
     }
 
     #temperature { 
-        font-size: 2.2rem; 
+        font-size: 2rem; 
     }
 
-    /* 5. Caixa de Busca */
+    /* 6. Busca de Cidade */
     .search-box {
-        flex-direction: row; /* Mantém horizontal, mas ajusta tamanhos */
+        flex-direction: row; /* Mantém input e botão lado a lado */
         gap: 0.4rem;
+        width: 100%;
+        margin-top: 1rem;
     }
 
     .search-box input {
         padding: 0.7rem;
         font-size: 0.9rem;
+        flex: 1; /* Garante que o input use o espaço disponível */
     }
 
     .search-box button {
-        padding: 0 0.8rem;
-    }
-
-    #city-name {
-        font-size: 1.1rem;
+        padding: 0 1rem;
+        font-size: 0.85rem;
     }
 }
