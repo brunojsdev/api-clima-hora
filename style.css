@@ -157,8 +157,9 @@ body {
 .weather-info {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Mantém centralizado no eixo principal */
     gap: 1rem;
+    padding-right: 20px; /* Mantém centralizado no eixo principal */
 }
 
 #weather-icon {
@@ -277,7 +278,7 @@ body {
     /* 2. Layout que empilha as caixas */
     .app-layout {
         width: 95%;
-        gap: 15px; /* Espaçamento entre a caixa da Data e a do Clima */
+        gap: 40px; /* Espaçamento entre a caixa da Data e a do Clima */
         margin-top: 70px; /* Desce o conjunto para não bater no botão Voltar */
         padding: 0 10px;
         transform: translateY(-8vh);  /* Desloca o bloco inteiro 8% da altura da tela para cima do centro exato */
