@@ -60,33 +60,41 @@ body {
 }
 
 /* --- ESTILO DO BOTÃO VOLTAR --- */
-.back-portfolio-btn {
-    position: fixed;      /* Fixa o elemento em relação à janela do navegador */
-    top: 20px;            /* Distância do topo da tela */
-    left: 20px;           /* Distância da esquerda da tela */
-    z-index: 9999;        /* Garante que fique acima de qualquer outro elemento ou animação */
-    
-    background: rgba(21, 1, 54, 0.7);
-    border: 1px solid #5752ff;
-    color: #c9e4ff;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
+.back-btn {
     display: flex;
     align-items: center;
     gap: 8px;
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
+    padding: 10px 20px;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    cursor: pointer;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Estética Modern Dark */
+    background: rgba(139, 135, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--borda-clara) !important;
+    color: var(--textos);
 }
 
-.back-portfolio-btn:hover {
-    background: #090024;
-    border-color: #ffdd00;
-    color: #ffdd00;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(87, 82, 255, 0.4);
+.back-btn:hover {
+    border-color: var(--destaque-claro) !important;
+    box-shadow: 0 0 15px rgba(255, 170, 0, 0.4);
+    color: var(--destaque-claro) !important;
+    transform: translateX(-3px);
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* --- INTERFACE PRINCIPAL --- */
@@ -264,15 +272,12 @@ body {
    ========================================================================== */
 @media (max-width: 600px) {
     
-    /* 1. Botão Voltar (Visível no topo esquerdo) */
-    .back-portfolio-btn {
-        display: flex;
-        top: 10px;
-        left: 10px;
-        padding: 6px 12px;
-        font-size: 0.75rem;
-        gap: 5px;
-        z-index: 10; /* Garante que fique acima das caixas */
+    /* 1. Botão Voltar ao Portfolio */
+    .back-btn {
+        top: 15px;      /* Um pouco mais próximo do topo no mobile */
+        left: 15px;     /* Um pouco mais próximo da lateral */
+        padding: 8px 15px; /* Botão levemente menor para telas pequenas */
+        font-size: 0.8rem;
     }
 
     /* 2. Layout que empilha as caixas */
