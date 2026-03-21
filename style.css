@@ -56,7 +56,7 @@ body {
     height: 100vh;
     z-index: 0;
     pointer-events: none; /* Deixa os cliques passarem para a interface */
-    opacity: 0.27;
+    opacity: 0.50;
 }
 
 /* --- ESTILO DO BOTÃO VOLTAR --- */
