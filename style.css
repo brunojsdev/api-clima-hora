@@ -1,9 +1,9 @@
 /* --- PALETA DE CORES --- */
 :root {
     /* FUNDOS */
-    --fundo-claro: #190142;
-    --fundo-medio: #0b002b;
-    --fundo-escuro: #06001c;
+    --fundo-claro: #150136;
+    --fundo-medio: #090024;
+    --fundo-escuro: #040014;
 
     /* DESTAQUES */
     --destaque-claro: #ffdd00;
@@ -56,7 +56,7 @@ body {
     height: 100vh;
     z-index: 0;
     pointer-events: none; /* Deixa os cliques passarem para a interface */
-    opacity: 0.50;
+    opacity: 0.35;
 }
 
 /* --- ESTILO DO BOTÃO VOLTAR --- */
