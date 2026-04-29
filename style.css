@@ -1,366 +1,605 @@
-/* --- PALETA DE CORES --- */
+/*
+  ==========================================================================
+  ÍNDICE DO ARQUIVO (CSS)
+  1. VARIÁVEIS E DESIGN TOKENS (Root)
+  2. TEMA CLARO (Light Mode Override)
+  3. RESET E CONFIGURAÇÕES GERAIS
+  4. COMPONENTES GLOBAIS (Scrollbar e Canvas)
+  5. NAVEGAÇÃO E CONTROLES (Botões de UI)
+  6. CONTAINER PRINCIPAL (Layout)
+  7. RELÓGIO ANALÓGICO E DIGITAL
+  8. INTERFACE DE CLIMA (Weather Info)
+  9. BUSCA E ENTRADA DE DADOS
+  10. RODAPÉ (Footer)
+  11. RESPONSIVIDADE (Mobile First)
+  ==========================================================================
+*/
+
+/* 1. VARIÁVEIS E DESIGN TOKENS: Centralização das cores e temas */
 :root {
-    /* FUNDOS */
-    --fundo-claro: #150136;
-    --fundo-medio: #090024;
-    --fundo-escuro: #040014;
+  /* Cores de Fundo e Layout (Baseadas no Portfólio) */
+  --fundo-claro: #150136;
+  --fundo-medio: #090024;
+  --fundo-escuro: #040014;
+  --fundo-profundo: #03000a;
 
-    /* DESTAQUES */
-    --destaque-claro: #ffdd00;
-    --destaque-medio: #ffaa00;
-    --destaque-escuro: #ff9900;
+  --destaque-claro: #ffdd00;
+  --destaque-medio: #ffaa00;
+  --destaque-escuro: #ff9900;
 
-    /* BORDAS */
-    --borda-clara: #5752ff;
-    --borda-escura: #5a47ff;
+  /* Cores dos Botões (Padrão Portfólio) */
+  --btm-claro: #17005c;
+  --btm-medio: #110042;
+  --btm-escuro: #0d0033;
+  --btm-claro-h: #6b4100;
+  --btm-medio-h: #4d2b01;
+  --btm-escuro-h: #301b00;
 
-    /* TEXTOS */
-    --textos: #c9e4ff;
+  --brilho-interface: #8b87ff;
+  --borda-clara: #5752ff;
+  --borda-escura: #ffaa00;
 
-     /* CORES SOMBRAS DE FUNDO */
-     --sombra-topo: rgba(0, 0, 0, 0.85);
-     --vinheta-bordas: rgba(3, 0, 10, 0.7); /* Mais claro que o anterior */
-     --fundo-profundo: #03000a;
-    
-     /* CORES DAS NEBULOSAS (Ajustadas para mais brilho) */
-     --nuvem-indigo: rgba(75, 0, 130, 0.25);    
-     --nuvem-violeta: rgba(138, 43, 226, 0.2); 
-     --nuvem-magenta: rgba(200, 0, 255, 0.15);  
-     --nuvem-base: rgba(40, 0, 100, 0.3);      
+  --textos: #c9e4ff;
+
+  /* Variáveis para as Nebulosas do Fundo */
+  --sombra-topo: rgba(0, 0, 0, 0.85);
+  --nuvem-indigo: rgba(75, 0, 130, 0.25);
+  --nuvem-violeta: rgba(138, 43, 226, 0.2);
+  --nuvem-magenta: rgba(200, 0, 255, 0.15);
+  --nuvem-base: rgba(40, 0, 100, 0.3);
+
+  --cor-sombra-texto: rgba(255, 170, 0, 0.3);
+  --cor-sombra-btn-hover: rgba(255, 170, 0, 0.4);
+  --cor-sombra-box: rgba(87, 82, 255, 0.4);
 }
 
-
+/* 2. TEMA CLARO: Sobrescrita de cores para visual solar */
+body.light-mode {
+  --fundo-claro: #ffe082;
+  --fundo-medio: #ffb300;
+  --fundo-escuro: #e65100;
+  --destaque-claro: #4338ca;
+  --destaque-medio: #3b35cc;
+  --destaque-escuro: #17005c;
+  --brilho-interface: #ff7700;
+  --btm-claro: #fffef7;
+  --btm-medio: #ffe082;
+  --btm-escuro: #ffca28;
+  --btm-claro-h: #e8e6ff;
+  --btm-medio-h: #c6c2ff;
+  --btm-escuro-h: #a19bff;
+  --borda-clara: #ff9500;
+  --borda-escura: #5752ff;
+  --textos: #150136;
+  --sombra-topo: rgba(255, 220, 150, 0.4);
+  --fundo-profundo: #fff9c4;
+  --nuvem-indigo: rgba(255, 143, 0, 0.4);
+  --nuvem-violeta: rgba(255, 193, 7, 0.3);
+  --nuvem-magenta: rgba(200, 0, 255, 0.2);
+  --nuvem-base: rgba(255, 235, 59, 0.4);
+  --cor-sombra-texto: rgba(87, 82, 255, 0.25);
+  --cor-sombra-btn-hover: rgba(87, 82, 255, 0.4);
+  --cor-sombra-box: rgba(200, 100, 0, 0.25);
+  --cards: rgba(255, 255, 255, 0.9);
 }
-/* --- ESTILOS GERAIS --- */
+
+/* 3. RESET E CONFIGURAÇÕES GERAIS */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Space Grotesk', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 4. COMPONENTES GLOBAIS: Scrollbar e Canvas de fundo */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: var(--fundo-escuro);
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: var(--fundo-escuro);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--fundo-claro);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--borda-clara);
+  border-radius: 10px;
+  border: 2px solid var(--fundo-claro);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--borda-escura);
 }
 
 body {
-    color: var(--textos);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Evita scroll na animação do canvas */
-    background-color: var(--fundo-profundo);
+  color: var(--textos);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background-color: var(--fundo-profundo);
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
 
-  background-image: 
-    /* 1. Sombra no Topo (Mantido exatamente como estava para legibilidade) */
-    linear-gradient(to bottom, var(--sombra-topo) 0%, transparent 20%),
-    
-    /* 2. Vinheta lateral reajustada (Mais espaço para as nebulosas) */
-    radial-gradient(circle at center, transparent 70%, var(--vinheta-bordas) 100%),
-    
-    /* 3. Nebulosas centrais (Mais vivas no centro e parte inferior) */
-    radial-gradient(circle at 50% 35%, var(--nuvem-indigo), transparent 65%),
-    radial-gradient(circle at 20% 50%, var(--nuvem-violeta), transparent 55%),
-    radial-gradient(circle at 80% 75%, var(--nuvem-magenta), transparent 55%),
-    radial-gradient(circle at 50% 100%, var(--nuvem-base), transparent 70%);
-  
+  /* BACKGROUND DO PORTFÓLIO: Nebulosas e Profundidade */
+  background-image:
+    linear-gradient(to bottom, var(--sombra-topo) 0%, transparent 30%),
+    radial-gradient(circle at 20% 30%, var(--nuvem-indigo), transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--nuvem-magenta), transparent 50%),
+    radial-gradient(circle at 50% 50%, var(--nuvem-base), var(--fundo-profundo));
   background-attachment: fixed;
 }
 
-/* --- CANVAS --- */
 #bg-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-    pointer-events: none; /* Deixa os cliques passarem para a interface */
-    opacity: 0.5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none; /* Deixa os cliques passarem para a interface */
+  opacity: 0.5;
 }
 
-/* --- ESTILO DO BOTÃO VOLTAR --- */
-.back-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 9999;
-    cursor: pointer;
-    border-radius: 50px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Estética Modern Dark */
-    background: rgba(139, 135, 255, 0.1) !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--borda-clara) !important;
-    color: var(--textos);
+/* 5. NAVEGAÇÃO E CONTROLES: Botões de UI e Tema */
+.theme-toggle-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--borda-clara);
+  background: radial-gradient(
+    circle,
+    var(--btm-escuro) 0%,
+    var(--btm-claro) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 9999;
 }
 
-.back-btn:hover {
-    border-color: var(--destaque-claro) !important;
-    box-shadow: 0 0 15px rgba(255, 170, 0, 0.4);
-    color: var(--destaque-claro) !important;
-    transform: translateX(-3px);
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--borda-escura);
+  box-shadow: 0 0 15px var(--cor-sombra-btn-hover);
 }
 
-.btn-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.img-dark-mode {
+  color: #ffdd00;
+}
+.img-light-mode {
+  color: #5752ff;
+  display: none;
 }
 
-/* --- INTERFACE PRINCIPAL --- */
-.app-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Espaço entre a caixa de Data e a de Clima */
-    width: 90%;
-    max-width: 450px;
-    z-index: 1;
-    margin-top: 60px; /* Espaço para o botão de voltar não cobrir o relógio */
+body.light-mode .img-dark-mode {
+  display: none;
+}
+body.light-mode .img-light-mode {
+  display: block;
 }
 
-/* Ajuste na classe container para ser dinâmica */
+.back-portfolio-btn {
+  position: absolute; /* Agora move-se com o conteúdo da página */
+  top: 20px; /* Distância do topo da tela */
+  left: 20px; /* Distância da esquerda da tela */
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--textos);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10000;
+
+  /* CÓPIA EXATA DO BOTÃO DO PORTFÓLIO (SEM GLASSMORPHISM) */
+  background:
+    linear-gradient(
+        to bottom,
+        var(--btm-claro),
+        var(--btm-medio),
+        var(--btm-escuro)
+      )
+      padding-box,
+    linear-gradient(135deg, var(--borda-clara)) border-box;
+  border: 3px solid transparent;
+  transform: translateZ(0);
+  backdrop-filter: none; /* Removendo qualquer rastro de glassmorphism */
+}
+
+.back-portfolio-btn:hover {
+  border-color: var(--borda-escura);
+  box-shadow: 0 0 15px var(--cor-sombra-btn-hover);
+  color: var(--borda-escura);
+  transform: translateX(-3px);
+  background:
+    linear-gradient(
+        to bottom,
+        var(--btm-claro-h),
+        var(--btm-medio-h),
+        var(--btm-escuro-h)
+      )
+      padding-box,
+    linear-gradient(135deg, var(--borda-escura)) border-box;
+}
+
+/* 6. CONTAINER PRINCIPAL: Layout Flexbox */
 .container {
-    position: relative;
-    background-color: var(--fundo-medio);
-    border: 2px solid var(--borda-clara);
-    border-radius: 20px;
-    padding: 2rem;
-    width: 100%; /* Ocupa a largura do app-layout */
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 
-                inset 0 0 15px rgba(87, 82, 255, 0.2);
-    backdrop-filter: blur(5px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: auto; /* A borda só vai até onde termina o conteúdo */
+  position: relative;
+  z-index: 1;
+  margin: 90px auto 30px; /* Reduzido para caber melhor no desktop */
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  width: 90%;
+  max-width: 1000px;
+  transition: all 0.3s ease;
 }
 
-/* --- RELÓGIO --- */
+.app-section {
+  flex: 1;
+  min-height: 400px; /* Altura reduzida para evitar scroll no desktop */
+  background-color: var(--fundo-medio);
+  border-top: 4px solid var(--borda-clara);
+  border-bottom: 4px solid var(--borda-clara);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.7),
+    inset 0 0 15px rgba(87, 82, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Organiza o conteúdo preenchendo o espaço */
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.section-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--cor-subtitle-sec);
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+/* 7. RELÓGIO ANALÓGICO E DIGITAL: Visualização de tempo real */
 .clock-section {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 5px;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.analog-clock {
+  width: 190px;
+  height: 190px;
+  border: 6px solid var(--borda-clara);
+  border-radius: 50%;
+  position: relative;
+  background: rgba(0, 0, 0, 0.4);
+  margin-bottom: 5px;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom;
+  border-radius: 10px;
+  background: var(--textos);
+  transform: translateX(-50%) rotate(0deg);
+}
+
+.hour-hand {
+  width: 4px;
+  height: 48px;
+  background: var(--destaque-medio);
+}
+.min-hand {
+  width: 3px;
+  height: 72px;
+  background: var(--textos);
+}
+.sec-hand {
+  width: 1.5px;
+  height: 78px;
+  background: var(--destaque-claro);
+}
+
+.star-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--borda-clara);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+/* Marcadores do Relógio */
+.marker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  pointer-events: none;
+}
+
+.star-marker::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: var(--destaque-claro);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0Q60 40 100 50Q60 60 50 100Q40 60 0 50Q40 40 50 0Z'/%3E%3C/svg%3E")
+    no-repeat center;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0Q60 40 100 50Q60 60 50 100Q40 60 0 50Q40 40 50 0Z'/%3E%3C/svg%3E")
+    no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+.dot-marker::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  background: var(--textos);
+  border-radius: 50%;
+  opacity: 0.27;
+}
+
+.pos-1 {
+  transform: rotate(30deg);
+}
+.pos-2 {
+  transform: rotate(60deg);
+}
+.pos-3 {
+  transform: rotate(90deg);
+}
+.pos-3::after {
+  transform: rotate(-90deg);
+}
+.pos-4 {
+  transform: rotate(120deg);
+}
+.pos-5 {
+  transform: rotate(150deg);
+}
+.pos-6 {
+  transform: rotate(180deg);
+}
+.pos-6::after {
+  transform: rotate(-180deg);
+}
+.pos-7 {
+  transform: rotate(210deg);
+}
+.pos-8 {
+  transform: rotate(240deg);
+}
+.pos-9 {
+  transform: rotate(270deg);
+}
+.pos-9::after {
+  transform: rotate(-270deg);
+}
+.pos-10 {
+  transform: rotate(300deg);
+}
+.pos-11 {
+  transform: rotate(330deg);
 }
 
 #time {
-    font-size: 4rem;
-    font-weight: 700;
-    color: var(--destaque-claro);
-    text-shadow: 0 0 15px rgba(255, 221, 0, 0.4);
-    line-height: 1;
-    letter-spacing: -2px;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 20px var(--cor-sombra-texto);
+  line-height: 1;
+  letter-spacing: -2px;
 }
 
 #date {
-    font-size: 1.1rem;
-    color: var(--destaque-escuro);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--destaque-escuro);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-top: 1rem;
 }
 
-/* --- CLIMA --- */
+/* 8. INTERFACE DE CLIMA: Visualização de dados meteorológicos */
 .weather-section {
-    background-color: var(--fundo-claro);
-    border: 1px solid var(--borda-escura);
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.weather-info {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Mantém centralizado no eixo principal */
-    gap: 1rem;
-    padding-left: 80px; /* Move o bloco levemente para a direita */
-}
-
-#weather-icon {
-    font-size: 3.5rem;
-    filter: drop-shadow(0 0 10px rgba(255, 170, 0, 0.3));
-}
-
-.temp-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-#temperature {
-    font-size: 2.7rem;
-    font-weight: 700;
-    color: var(--destaque-medio);
-    line-height: 1;
-}
-
-#description {
-    font-size: 1rem;
-    color: var(--textos);
-    opacity: 0.9;
-}
-
-/* --- BUSCA DE CIDADE --- */
-#city-name, #description {
-    word-break: break-word;
-    overflow-wrap: anywhere;
-    white-space: normal;
-}
-.search-box {
-    display: flex;
-    width: 100%;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-    justify-content: center;
-}
-
-.search-box input {
-    flex: 1;
-    min-width: 0;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--borda-escura);
-    background-color: var(--fundo-escuro);
-    color: var(--textos);
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.search-box input:focus {
-    border-color: var(--destaque-claro);
-}
-
-.search-box input::placeholder {
-    color: rgba(201, 228, 255, 0.5);
-}
-
-.search-box button {
-    background-color: var(--borda-clara);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 0 1.2rem;
-    cursor: pointer;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-box button:hover {
-    background-color: var(--borda-escura);
-    box-shadow: 0 0 10px var(--borda-clara);
+  gap: 1.5rem;
 }
 
 #city-name {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--destaque-claro);
-    margin-bottom: 1.5rem;
-    width: 100%;
-    text-align: left;
-    word-break: break-word;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--destaque-claro);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+#weather-icon {
+  font-size: 4.5rem;
+  filter: drop-shadow(0 0 20px var(--cor-sombra-texto));
+}
+
+.temp-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#temperature {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+#description {
+  font-size: 1rem;
+  color: var(--textos);
+  opacity: 0.9;
+  margin-top: 0.8rem;
+}
+
+/* 9. BUSCA E ENTRADA DE DADOS: Geocoding input */
+.search-box {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--borda-escura);
+  background-color: var(--fundo-escuro);
+  color: var(--textos);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-box input:focus {
+  border-color: var(--destaque-claro);
+}
+
+.search-box input::placeholder {
+  color: rgba(201, 228, 255, 0.5);
+}
+
+.search-box button {
+  background-color: var(--borda-clara);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 1.2rem;
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-box button:hover {
+  background-color: var(--borda-escura);
+  box-shadow: 0 0 10px var(--borda-clara);
+}
+
+#city-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--destaque-claro);
+  margin-bottom: -0.5rem;
+  width: 100%;
+  text-align: center;
 }
 
 /* Loading animado */
 .loading {
-    animation: pulse 1.5s infinite;
+  animation: pulse 1.5s infinite;
 }
 @keyframes pulse {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE MOBILE (CAIXAS SEPARADAS)
-   ========================================================================== */
+/* 10. RODAPÉ INFORMATIVO */
+footer {
+  align-self: stretch;
+  margin-top: auto;
+  padding: 20px;
+  font-size: 0.85rem;
+  text-align: center;
+  color: var(--textos);
+  background: var(--fundo-escuro);
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(to right, var(--borda-clara)) 1;
+  z-index: 10;
+}
+
+body.light-mode footer {
+  background: #ffffff;
+  border-top: 3px solid var(--borda-clara);
+  border-image: none !important;
+}
+
+/* 11. RESPONSIVIDADE: Mobile First adjustments */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 140px;
+    gap: 1.5rem;
+  }
+  .app-section {
+    width: 100%;
+    max-width: 450px;
+    min-height: auto;
+  }
+  #time {
+    font-size: 2.4rem;
+  }
+}
+
+/* --- BOTÃO VOLTAR PORTFOLIO --- */
 @media (max-width: 600px) {
-    
-    /* 1. Botão Voltar ao Portfolio */
-    .back-btn {
-        top: 15px;      /* Um pouco mais próximo do topo no mobile */
-        left: 15px;     /* Um pouco mais próximo da lateral */
-        padding: 8px 15px; /* Botão levemente menor para telas pequenas */
-        font-size: 0.8rem;
-    }
-
-    /* 2. Layout que empilha as caixas */
-    .app-layout {
-        width: 95%;
-        gap: 40px; /* Espaçamento entre a caixa da Data e a do Clima */
-        margin-top: 70px; /* Desce o conjunto para não bater no botão Voltar */
-        padding: 0 10px;
-        transform: translateY(-8vh);  /* Desloca o bloco inteiro 8% da altura da tela para cima do centro exato */
-
-    }
-
-    /* 3. Ajuste das Caixas Individuais */
-    .container {
-        padding: 1.5rem;
-        min-height: auto; /* A borda agora respeita apenas o conteúdo de cada caixa */
-        width: 100%;
-    }
-
-    /* 4. Tipografia do Relógio (Caixa Superior) */
-    #time { 
-        font-size: 3rem; 
-        letter-spacing: -1px;
-        line-height: 1;
-    }
-
-    #date {
-        font-size: 0.9rem;
-        margin-top: 5px;
-    }
-
-    /* 5. Seção de Clima (Caixa Inferior) */
-    .weather-section {
-        padding: 0.5rem 0; /* Ajuste interno para mobile */
-        width: 100%;
-    }
-
-    #city-name {
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-    }
-
-    #weather-icon {
-        font-size: 2.5rem;
-    }
-
-    #temperature { 
-        font-size: 2rem; 
-    }
-
-    /* 6. Busca de Cidade */
-    .search-box {
-        flex-direction: row; /* Mantém input e botão lado a lado */
-        gap: 0.4rem;
-        width: 100%;
-        margin-top: 1rem;
-    }
-
-    .search-box input {
-        padding: 0.7rem;
-        font-size: 0.9rem;
-        flex: 1; /* Garante que o input use o espaço disponível */
-    }
-
-    .search-box button {
-        padding: 0 1rem;
-        font-size: 0.85rem;
-    }
+  .back-portfolio-btn {
+    top: 10px;
+    left: 10px;
+    padding: 10px 15px;
+    font-size: 0.75rem;
+    border-width: 2px;
+  }
 }
