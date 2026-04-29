@@ -1,66 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
+<!--
+  ==========================================================================
+  ÍNDICE DO ARQUIVO (HTML)
+  1. CONFIGURAÇÕES E METADADOS (<head>)
+  2. CONTROLES DE INTERFACE (Tema)
+  3. NAVEGAÇÃO EXTERNA (Botão Voltar)
+  4. FUNDO INTERATIVO (Canvas)
+  5. SEÇÃO PRINCIPAL (Container da Aplicação)
+  6. RODAPÉ E SCRIPTS
+  ==========================================================================
+-->
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <!-- 1. CONFIGURAÇÕES E METADADOS -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Previsão do Tempo & Relógio</title>
-    
     <!-- Fonte moderna -->
-    <link href="[https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap](https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap)" rel="stylesheet">
-  
-    <!-- Ícone da aba do navegador -->
-    <link rel="icon" type="image/png" href="./img/fi-port.png">
-
+    <link
+      href="[https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap](https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap)"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="./img/fi-port.png" />
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script></head>
-  
+    <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Conectando o arquivo CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 2. CONTROLES DE INTERFACE: Botão para troca de tema (claro/escuro) -->
+    <button
+      id="theme-toggle-btn"
+      class="theme-toggle-btn"
+      title="Alternar Modo Claro/Escuro"
+    >
+      <i data-lucide="star" class="img-dark-mode"></i>
+      <i data-lucide="star-off" class="img-light-mode"></i>
+    </button>
 
-</head>
-<body>
-
-    <!-- Botão Voltar ao Portfolio -->
-    <a href="https://brunojsilveira.vercel.app/" id="back-btn" onclick="window.close();" class="back-btn">
-    <div class="btn-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left">
-            <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
-        </svg>
-    </div>
-    <span class="btn-text">Voltar ao Portfolio</span>
+    <!-- 3. NAVEGAÇÃO EXTERNA: Link para retorno ao hub principal -->
+    <a
+      href="https://brunojsdev.github.io/meu-portfolio/"
+      class="back-portfolio-btn"
+    >
+      <i
+        data-lucide="arrow-big-left-dash"
+        style="width: 24px; height: 24px"
+      ></i>
+      <span>Voltar ao Portfolio</span>
     </a>
 
-    <!-- Canvas de Background -->
+    <!-- 4. FUNDO INTERATIVO: Camada para animação de partículas -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Container Principal do App -->
-    <div class="app-layout">
-    
-    <section class="container clock-container">
-        <div id="time">00:00:00</div>
-        <div id="date">Carregando data...</div>
-    </section>
+    <!-- 5. SEÇÃO PRINCIPAL: Interface do Horário e Clima -->
+    <main class="container">
+      <!-- LADO ESQUERDO: Interface da Data/Hora -->
+      <section class="app-section clock-section">
+        <h2 class="section-title">Tempo Local</h2>
+        <div class="analog-clock">
+          <!-- Marcadores de Hora -->
+          <div class="marker star-marker pos-12"></div>
+          <div class="marker dot-marker pos-1"></div>
+          <div class="marker dot-marker pos-2"></div>
+          <div class="marker star-marker pos-3"></div>
+          <div class="marker dot-marker pos-4"></div>
+          <div class="marker dot-marker pos-5"></div>
+          <div class="marker star-marker pos-6"></div>
+          <div class="marker dot-marker pos-7"></div>
+          <div class="marker dot-marker pos-8"></div>
+          <div class="marker star-marker pos-9"></div>
+          <div class="marker dot-marker pos-10"></div>
+          <div class="marker dot-marker pos-11"></div>
 
-    <section class="container weather-container">
+          <div class="hand hour-hand" id="hour-hand"></div>
+          <div class="hand min-hand" id="min-hand"></div>
+          <div class="hand sec-hand" id="sec-hand"></div>
+          <div class="star-center"></div>
+        </div>
+        <div class="digital-info">
+          <div id="time">00:00:00</div>
+          <div id="date">Carregando data...</div>
+        </div>
+      </section>
+
+      <!-- LADO DIREITO: Interface do Clima/Cidade -->
+      <section class="app-section weather-section">
+        <h2 class="section-title">Previsão Meteorológica</h2>
         <div id="city-name">Carregando clima...</div>
-        
+
         <div class="weather-info">
-            <div id="weather-icon">⏳</div>
-            <div class="temp-container">
-                <div id="temperature">--°C</div>
-                <div id="description">Aguarde</div>
-            </div>
+          <div id="weather-icon">⏳</div>
+          <div class="temp-container">
+            <div id="temperature">--°C</div>
+            <div id="description">Aguarde</div>
+          </div>
         </div>
 
         <div class="search-box">
-            <input type="text" id="city-input" placeholder="Digite uma cidade..." autocomplete="off">
-            <button id="search-btn">Buscar</button>
+          <input
+            type="text"
+            id="city-input"
+            placeholder="Digite uma cidade..."
+            autocomplete="off"
+          />
+          <button id="search-btn">Buscar</button>
         </div>
-    </section>
+      </section>
+    </main>
 
-    </div>
-    
+    <!-- 6. RODAPÉ E SCRIPTS -->
+    <footer>
+      &copy; 2026 Bruno J. Silveira. Todos os direitos reservados.
+    </footer>
+
     <!-- Conectando o arquivo JavaScript -->
     <script src="script.js" defer></script>
-</body>
+  </body>
 </html>
